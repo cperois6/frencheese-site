@@ -1323,7 +1323,7 @@ section { padding: clamp(64px, 9vw, 120px) 0; }
 }
 .dates-list .when {
   flex-shrink: 0;
-  min-width: 96px;
+  min-width: 150px;
   font-family: var(--font-display);
   color: var(--orange-light);
   text-transform: uppercase;
@@ -1331,6 +1331,10 @@ section { padding: clamp(64px, 9vw, 120px) 0; }
 }
 .dates-list .what { color: var(--cream); font-weight: 600; line-height: 1.4; }
 .dates-list .what small { display: block; color: rgba(250, 246, 240, 0.7); font-weight: 400; font-size: 0.9rem; }
+@media (max-width: 600px) {
+  .dates-list li { flex-direction: column; align-items: flex-start; gap: 4px; }
+  .dates-list .when { min-width: 0; }
+}
 
 /* ============================================
    Formulaire de devis
@@ -1797,10 +1801,9 @@ const CONFIG = {
   googlePlaceId: 'ChIJ-eoAdWXflvcRu8a1SE__BEg',
 
   // Google Sheet « Contenu du site FRENCHEESE », publié sur le Web
-  // (Fichier > Partager > Publier sur le Web). Tant qu'il n'est pas publié, le site
-  // affiche le contenu par défaut ci-dessous.
-  sheetKey: '1O_YA1s70XGiD_pY5qzOuZYXingSVEqofyFleqT-hTcM', // identifiant du fichier
-  sheetPubId: '', // facultatif : identifiant de publication « 2PACX-… », prioritaire s'il est rempli
+  // (Fichier > Partager > Publier sur le Web) : identifiant de publication « 2PACX-… ».
+  // Si le Sheet ne répond pas, le site affiche le contenu par défaut ci-dessous.
+  sheetPubId: '2PACX-1vSCjj3v5kvZn9oaPuxY1k_BktCcPHfrJMtYgmov4_G1i0pfgPXzI2qUbuLf8vzlLcTyT5pMO0e_Y62c',
   sheetTabs: { carte: 1, dates: 2, privatisation: 3 }, // numéros (gid) des onglets
 };
 
@@ -2095,10 +2098,7 @@ function col(o, ...prefixes) {
 const isVisible = o => norm(col(o, 'visible')) !== 'non';
 
 async function fetchTab(gid) {
-  const base = CONFIG.sheetPubId
-    ? `https://docs.google.com/spreadsheets/d/e/${encodeURIComponent(CONFIG.sheetPubId)}/pub`
-    : `https://docs.google.com/spreadsheets/d/${encodeURIComponent(CONFIG.sheetKey)}/pub`;
-  const url = `${base}?gid=${gid}&single=true&output=csv`;
+  const url = `https://docs.google.com/spreadsheets/d/e/${encodeURIComponent(CONFIG.sheetPubId)}/pub?gid=${gid}&single=true&output=csv`;
   const ctrl = new AbortController();
   const timer = setTimeout(() => ctrl.abort(), 8000);
   try {
@@ -2130,19 +2130,33 @@ function parseFrDate(s) {
   return Number.isNaN(d.getTime()) ? null : d;
 }
 
+// « sam. 28 nov. » pour un jour, « 28 → 30 déc. » ou « 28 nov. → 2 déc. » pour plusieurs jours
+function whenLabel(start, end) {
+  if (!end || end <= start) return start.toLocaleDateString('fr-FR', { weekday: 'short', day: 'numeric', month: 'short' });
+  const endText = end.toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' });
+  const sameMonth = start.getMonth() === end.getMonth() && start.getFullYear() === end.getFullYear();
+  const startText = sameMonth ? String(start.getDate()) : start.toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' });
+  return `${startText} → ${endText}`;
+}
+
 function renderDates(rows) {
   const today = new Date();
   today.setHours(0, 0, 0, 0);
   const items = rows.filter(isVisible)
-    .map(r => ({ date: parseFrDate(col(r, 'date')), what: col(r, 'evenement'), where: col(r, 'lieu'), hours: col(r, 'horaire') }))
-    .filter(x => x.date && x.date >= today && x.what)
-    .sort((a, b) => a.date - b.date)
+    .map(r => ({
+      start: parseFrDate(col(r, 'date de debut', 'date')),
+      end: parseFrDate(col(r, 'date de fin')),
+      what: col(r, 'evenement'),
+      where: col(r, 'lieu'),
+      hours: col(r, 'horaire'),
+    }))
+    .filter(x => x.start && x.what && (x.end && x.end > x.start ? x.end : x.start) >= today)
+    .sort((a, b) => a.start - b.start)
     .slice(0, 6);
   if (!items.length) return;
   document.getElementById('datesList').innerHTML = items.map(x => {
-    const when = x.date.toLocaleDateString('fr-FR', { weekday: 'short', day: 'numeric', month: 'short' });
     const details = [x.where, x.hours].filter(Boolean).join(' · ');
-    return `<li><span class="when">${esc(when)}</span><span class="what">${esc(x.what)}${details ? `<small>${esc(details)}</small>` : ''}</span></li>`;
+    return `<li><span class="when">${esc(whenLabel(x.start, x.end))}</span><span class="what">${esc(x.what)}${details ? `<small>${esc(details)}</small>` : ''}</span></li>`;
   }).join('');
   document.getElementById('datesBlock').hidden = false;
 }
@@ -2167,7 +2181,7 @@ function renderPrivatisation(rows) {
 }
 
 async function loadSheet() {
-  if (!CONFIG.sheetPubId && !CONFIG.sheetKey) return;
+  if (!CONFIG.sheetPubId) return;
   const tabs = CONFIG.sheetTabs;
   const [carte, dates, priva] = await Promise.allSettled([fetchTab(tabs.carte), fetchTab(tabs.dates), fetchTab(tabs.privatisation)]);
   if (carte.status === 'fulfilled') renderCarte(carteFromSheet(carte.value));
