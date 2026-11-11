@@ -1,0 +1,1872 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>FRENCHEESE — Le grilled cheese à la française | Saint-Jean-de-Monts</title>
+<meta name="description" content="FRENCHEESE, le food truck de grilled cheese à la française à Saint-Jean-de-Monts. Pain artisanal, fromages français, recettes signature. Commande en ligne et privatisation d'événements." />
+<meta name="theme-color" content="#1B2A4E" />
+
+<meta property="og:title" content="FRENCHEESE — Le grilled cheese à la française" />
+<meta property="og:description" content="Food truck de grilled cheese gourmands sur la côte vendéenne. Pain artisanal, fromages français." />
+<meta property="og:type" content="website" />
+<meta property="og:locale" content="fr_FR" />
+
+<!-- Force le navigateur à transmettre l'origine (requis par Google Places API) -->
+<meta name="referrer" content="strict-origin-when-cross-origin" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bowlby+One&family=Sacramento&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+/* ============================================
+   FRENCHEESE — Design System
+   ============================================ */
+:root {
+  --navy: #1B2A4E;
+  --navy-light: #2A3D6B;
+  --navy-dark: #0F1B36;
+  --orange: #ff8200;
+  --orange-light: #FF9D33;
+  --orange-dark: #E06E00;
+  --cream: #FAF6F0;
+  --cream-warm: #F5E9D4;
+  --ink: #1A1A1A;
+  --muted: #6B6B6B;
+  --border: #E6DECE;
+  --white: #FFFFFF;
+  --shadow-sm: 0 2px 8px rgba(27, 42, 78, 0.08);
+  --shadow-md: 0 8px 24px rgba(27, 42, 78, 0.12);
+  --shadow-lg: 0 20px 60px rgba(27, 42, 78, 0.18);
+  --radius: 14px;
+  --radius-lg: 22px;
+  --maxw: 1180px;
+
+  /* Typography */
+  --font-display: 'Bowlby One', 'Impact', system-ui, sans-serif;
+  --font-script: 'Sacramento', 'Brush Script MT', cursive;
+  --font-body: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: rgba(242, 107, 31, 0.18); }
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 80px;
+  overflow-x: hidden;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--font-body);
+  background: var(--cream);
+  color: var(--ink);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+  width: 100%;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  font-weight: 400; /* Bowlby One only has one weight */
+  letter-spacing: -0.01em;
+  line-height: 1.05;
+  color: var(--navy);
+  text-transform: uppercase;
+}
+
+h1 { font-size: clamp(2rem, 8.5vw, 5rem); }
+h2 { font-size: clamp(1.6rem, 6vw, 3.3rem); margin-bottom: 0.5em; }
+h3 { font-size: clamp(1.2rem, 4vw, 1.7rem); }
+
+p { color: var(--ink); }
+
+.script {
+  font-family: var(--font-script);
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: 0;
+  line-height: 1.2;
+}
+
+a { color: var(--orange); text-decoration: none; transition: color .2s; }
+a:hover { color: var(--orange-dark); }
+
+img { max-width: 100%; display: block; }
+
+.container { max-width: var(--maxw); margin: 0 auto; padding: 0 24px; }
+
+section { padding: clamp(64px, 9vw, 120px) 0; }
+
+.eyebrow {
+  display: inline-block;
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--orange);
+  margin-bottom: 18px;
+}
+
+.section-intro {
+  max-width: 720px;
+  margin: 0 auto 56px;
+  text-align: center;
+}
+.section-intro .script {
+  display: block;
+  font-size: clamp(1.6rem, 3vw, 2.4rem);
+  color: var(--orange);
+  margin-top: -8px;
+  margin-bottom: 14px;
+}
+.section-intro p { color: var(--muted); font-size: 1.1rem; margin-top: 16px; }
+
+/* ============================================
+   Buttons
+   ============================================ */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 28px;
+  border-radius: 999px;
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 0.98rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: all .25s cubic-bezier(.4,0,.2,1);
+  text-decoration: none;
+  white-space: nowrap;
+}
+.btn-primary {
+  background: var(--orange);
+  color: var(--white);
+}
+.btn-primary:hover {
+  background: var(--orange-dark);
+  color: var(--white);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+.btn-secondary {
+  background: transparent;
+  color: var(--navy);
+  border-color: var(--navy);
+}
+.btn-secondary:hover {
+  background: var(--navy);
+  color: var(--white);
+}
+.btn-ghost {
+  background: var(--white);
+  color: var(--navy);
+  box-shadow: var(--shadow-sm);
+}
+.btn-ghost:hover { background: var(--cream-warm); color: var(--navy); }
+.btn-whatsapp {
+  background: #25D366;
+  color: var(--white);
+}
+.btn-whatsapp:hover {
+  background: #1EBE57;
+  color: var(--white);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(37, 211, 102, 0.35);
+}
+
+/* ============================================
+   Header / Navigation
+   ============================================ */
+.header {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  background: rgba(250, 246, 240, 0.92);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid transparent;
+  transition: all .3s;
+}
+.header.scrolled {
+  border-bottom-color: var(--border);
+  box-shadow: var(--shadow-sm);
+}
+.header .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 14px;
+  padding-bottom: 14px;
+}
+.brand {
+  display: flex;
+  align-items: center;
+  background: var(--navy);
+  border-radius: 12px;
+  padding: 10px 18px;
+  line-height: 0;
+  transition: transform .2s;
+}
+.brand:hover {
+  transform: translateY(-1px);
+}
+.brand img {
+  height: 30px;
+  width: auto;
+  display: block;
+}
+@media (max-width: 480px) {
+  .brand { padding: 8px 14px; }
+  .brand img { height: 24px; }
+}
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+}
+.nav a {
+  color: var(--navy);
+  font-weight: 600;
+  font-size: 0.92rem;
+  position: relative;
+}
+.nav a:hover { color: var(--orange); }
+.nav .btn { padding: 10px 22px; font-size: 0.85rem; }
+
+.menu-toggle {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+}
+.menu-toggle span {
+  display: block;
+  width: 24px; height: 2px;
+  background: var(--navy);
+  margin: 5px 0;
+  transition: all .3s;
+}
+
+@media (max-width: 880px) {
+  .nav { display: none; }
+  .nav.open {
+    display: flex;
+    position: absolute;
+    top: 100%; left: 0; right: 0;
+    background: var(--cream);
+    flex-direction: column;
+    padding: 24px;
+    gap: 18px;
+    box-shadow: var(--shadow-md);
+    border-bottom: 1px solid var(--border);
+  }
+  .menu-toggle { display: block; }
+}
+
+/* ============================================
+   Hero
+   ============================================ */
+.hero {
+  padding-top: clamp(140px, 18vw, 200px);
+  padding-bottom: clamp(80px, 12vw, 140px);
+  background:
+    radial-gradient(ellipse at top right, rgba(242, 107, 31, 0.08), transparent 60%),
+    radial-gradient(ellipse at bottom left, rgba(27, 42, 78, 0.06), transparent 50%),
+    var(--cream);
+  position: relative;
+  overflow: hidden;
+}
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 60px;
+  align-items: center;
+}
+.hero-tagline {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--cream-warm);
+  color: var(--navy);
+  padding: 8px 16px;
+  border-radius: 999px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  margin-bottom: 24px;
+}
+.hero-tagline .pulse { width: 8px; height: 8px; background: var(--orange); border-radius: 50%; }
+.hero h1 {
+  margin-bottom: 14px;
+}
+.hero .script-accent {
+  display: block;
+  font-family: var(--font-script);
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: 0;
+  color: var(--orange);
+  font-size: clamp(1.8rem, 6vw, 3.6rem);
+  margin-bottom: 18px;
+  line-height: 1;
+}
+.hero-sub {
+  font-size: 1.18rem;
+  color: var(--muted);
+  margin-bottom: 36px;
+  max-width: 520px;
+}
+.hero-cta {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-bottom: 40px;
+}
+.hero-stats {
+  display: flex;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+.hero-stat .num {
+  font-family: var(--font-display);
+  font-size: 2.4rem;
+  color: var(--navy);
+  line-height: 1;
+}
+.hero-stat .label {
+  font-size: 0.82rem;
+  color: var(--muted);
+  margin-top: 6px;
+  letter-spacing: 0.04em;
+}
+
+.hero-visual {
+  position: relative;
+  aspect-ratio: 1/1;
+  border-radius: var(--radius-lg);
+  background: var(--navy);
+  overflow: hidden;
+  box-shadow: var(--shadow-lg);
+  display: grid;
+  place-items: center;
+  padding: 40px;
+}
+.hero-visual::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 30% 20%, rgba(242, 107, 31, 0.18), transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(255,255,255,0.04), transparent 50%);
+}
+
+/* Official FRENCHEESE logo */
+.hero-logo-svg {
+  position: relative;
+  z-index: 2;
+  width: 92%;
+  max-width: 460px;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
+.hero-badge {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  background: var(--orange);
+  color: var(--white);
+  padding: 14px 18px;
+  border-radius: 14px;
+  text-align: center;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+  z-index: 3;
+}
+.hero-badge .label { font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.12em; opacity: 0.9; }
+.hero-badge .price {
+  font-family: var(--font-display);
+  font-size: 1.8rem;
+  display: block;
+  line-height: 1;
+  margin-top: 4px;
+}
+
+@media (max-width: 880px) {
+  .hero-grid { grid-template-columns: 1fr; gap: 40px; }
+  .hero-visual { max-width: 420px; margin: 0 auto; aspect-ratio: 4/3; }
+  .hero-stats { gap: 24px; }
+  .hero-stat .num { font-size: 1.9rem; }
+}
+
+/* ============================================
+   À propos
+   ============================================ */
+.about {
+  background: var(--white);
+}
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.3fr;
+  gap: 64px;
+  align-items: center;
+}
+.about-image {
+  aspect-ratio: 4/5;
+  background:
+    linear-gradient(135deg, var(--cream-warm), var(--cream)),
+    var(--cream-warm);
+  border-radius: var(--radius-lg);
+  position: relative;
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+  display: grid;
+  place-items: center;
+}
+.about-image .ph {
+  text-align: center;
+  color: var(--muted);
+  font-style: italic;
+  font-size: 0.9rem;
+}
+.about-image .ph .file { display: block; font-style: normal; font-family: monospace; background: var(--white); padding: 4px 10px; border-radius: 6px; margin-top: 10px; font-size: 0.75rem; color: var(--navy); }
+.about-image-frame {
+  position: absolute;
+  inset: 24px;
+  border: 2px dashed var(--border);
+  border-radius: var(--radius);
+}
+.about-content p {
+  font-size: 1.08rem;
+  color: var(--ink);
+  margin-bottom: 18px;
+}
+.about-content .signature {
+  margin-top: 32px;
+  font-family: var(--font-script);
+  font-size: 2.6rem;
+  color: var(--orange);
+  line-height: 1;
+}
+.about-content .signature small {
+  display: block;
+  font-family: var(--font-body);
+  font-style: normal;
+  font-size: 0.85rem;
+  color: var(--muted);
+  margin-top: 8px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+@media (max-width: 880px) {
+  .about-grid { grid-template-columns: 1fr; gap: 40px; }
+  .about-image { max-width: 380px; margin: 0 auto; }
+}
+
+/* ============================================
+   Menu
+   ============================================ */
+.menu {
+  background: var(--cream);
+}
+.menu-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+  margin-bottom: 60px;
+}
+.menu-card {
+  background: var(--white);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  transition: transform .3s, box-shadow .3s;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--border);
+}
+.menu-card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-md);
+}
+.menu-card-img {
+  aspect-ratio: 4/3;
+  position: relative;
+  display: grid;
+  place-items: center;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: var(--navy);
+  color: var(--orange);
+  font-family: var(--font-display);
+  font-size: 4rem;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+}
+.menu-card-img.has-img {
+  color: transparent;
+}
+.menu-card-tag {
+  position: absolute;
+  top: 14px; left: 14px;
+  background: var(--white);
+  color: var(--navy);
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  box-shadow: var(--shadow-sm);
+  z-index: 2;
+}
+.menu-card-tag.veg { background: #4A7C3A; color: white; }
+.menu-card-body {
+  padding: 24px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+.menu-card h3 {
+  margin-bottom: 8px;
+  font-size: 1.5rem;
+  color: var(--navy);
+}
+.menu-card-desc {
+  color: var(--muted);
+  font-size: 0.92rem;
+  margin-bottom: 20px;
+  flex: 1;
+  line-height: 1.5;
+}
+.menu-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.menu-card-price {
+  font-family: var(--font-display);
+  font-size: 1.7rem;
+  color: var(--navy);
+  letter-spacing: -0.02em;
+}
+.menu-card-footer { justify-content: flex-start; }
+
+/* Sides & Formules */
+.extras-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  margin-top: 60px;
+}
+.extras-card {
+  background: var(--white);
+  border-radius: var(--radius-lg);
+  padding: 36px;
+  border: 1px solid var(--border);
+}
+.extras-card h3 {
+  font-size: 1.4rem;
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--navy);
+}
+.extras-card h3 .icon {
+  width: 38px; height: 38px;
+  background: var(--cream-warm);
+  border-radius: 10px;
+  display: grid; place-items: center;
+  font-size: 1.2rem;
+}
+.extras-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.extras-list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  background: var(--cream);
+  border-radius: 12px;
+}
+.extras-list .name { font-weight: 500; }
+.extras-list .price {
+  font-family: var(--font-display);
+  color: var(--navy);
+  white-space: nowrap;
+  font-size: 1.1rem;
+  letter-spacing: -0.02em;
+}
+
+.formule {
+  background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
+  color: var(--white);
+  padding: 18px;
+  border-radius: 14px;
+  margin-top: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+.formule .name { font-weight: 600; }
+.formule .name small { display: block; opacity: 0.7; font-size: 0.85em; font-weight: 400; margin-top: 2px; }
+.formule .price {
+  color: var(--orange);
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  letter-spacing: -0.02em;
+}
+
+@media (max-width: 720px) {
+  .extras-grid { grid-template-columns: 1fr; }
+}
+
+/* ============================================
+   Planning
+   ============================================ */
+.planning {
+  background: var(--navy);
+  color: var(--cream);
+  position: relative;
+  overflow: hidden;
+}
+.planning::before {
+  content: "";
+  position: absolute;
+  top: -120px; right: -120px;
+  width: 360px; height: 360px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(242, 107, 31, 0.15), transparent 70%);
+}
+.planning h2 { color: var(--cream); }
+.planning .eyebrow { color: var(--orange-light); }
+.planning-block {
+  max-width: 680px;
+  margin: 0 auto;
+  text-align: center;
+  position: relative;
+  z-index: 2;
+}
+.planning-block .script {
+  display: block;
+  font-family: var(--font-script);
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  color: var(--orange-light);
+  margin-top: -4px;
+  margin-bottom: 32px;
+}
+.planning-address {
+  display: inline-flex;
+  align-items: center;
+  gap: 16px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: var(--radius);
+  padding: 18px 28px;
+  text-align: left;
+  margin-bottom: 32px;
+}
+.planning-pin {
+  font-size: 2rem;
+  flex-shrink: 0;
+}
+.planning-pin-label {
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--orange-light);
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+.planning-pin-value {
+  color: var(--cream);
+  font-weight: 600;
+  font-size: 1.05rem;
+  line-height: 1.4;
+}
+.planning-msg {
+  color: rgba(250, 246, 240, 0.85);
+  font-size: 1.08rem;
+  line-height: 1.6;
+  margin-bottom: 28px;
+}
+.planning-msg strong { color: var(--cream); }
+.btn-instagram {
+  background: linear-gradient(135deg, #E1306C 0%, #F77737 50%, #FCAF45 100%);
+  padding: 16px 32px;
+  font-size: 1rem;
+}
+.btn-instagram:hover {
+  background: linear-gradient(135deg, #C13584 0%, #E1306C 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 32px rgba(225, 48, 108, 0.4);
+}
+.planning-note {
+  color: rgba(250, 246, 240, 0.55);
+  font-size: 0.92rem;
+  font-style: italic;
+  margin-top: 22px;
+}
+
+/* ============================================
+   Privatisation
+   ============================================ */
+.private {
+  background: var(--cream);
+}
+.private-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: center;
+}
+.private-visual {
+  aspect-ratio: 1;
+  border-radius: var(--radius-lg);
+  background:
+    linear-gradient(135deg, var(--orange) 0%, var(--orange-dark) 100%);
+  position: relative;
+  overflow: hidden;
+  box-shadow: var(--shadow-lg);
+  display: grid;
+  place-items: center;
+  color: var(--white);
+}
+.private-visual::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 80% 20%, rgba(255,255,255,0.2), transparent 50%);
+}
+.private-visual-text {
+  text-align: center;
+  position: relative;
+  z-index: 2;
+  padding: 40px;
+}
+.private-visual-text .script {
+  font-family: var(--font-script);
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  color: var(--cream);
+  margin-bottom: 8px;
+  line-height: 1;
+}
+.private-visual-text .big {
+  font-family: var(--font-display);
+  font-size: clamp(2.4rem, 6vw, 4rem);
+  line-height: 1;
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+}
+.private-content h2 { margin-bottom: 20px; }
+.private-content p { color: var(--ink); font-size: 1.05rem; margin-bottom: 16px; }
+.private-features {
+  list-style: none;
+  margin: 28px 0;
+  display: grid;
+  gap: 12px;
+}
+.private-features li {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: 1rem;
+}
+.private-features .check {
+  flex-shrink: 0;
+  width: 24px; height: 24px;
+  background: var(--orange);
+  color: white;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-size: 0.75rem;
+  font-weight: 700;
+  margin-top: 2px;
+}
+.private-cta {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 32px;
+}
+
+@media (max-width: 880px) {
+  .private-grid { grid-template-columns: 1fr; gap: 40px; }
+  .private-visual { max-width: 420px; margin: 0 auto; }
+}
+
+/* ============================================
+   Galerie
+   ============================================ */
+.gallery {
+  background: var(--white);
+}
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(2, 220px);
+  gap: 14px;
+}
+.gallery-item {
+  background: linear-gradient(135deg, var(--cream-warm), #DCC9A0);
+  background-size: cover;
+  background-position: center;
+  border-radius: var(--radius);
+  overflow: hidden;
+  position: relative;
+  display: grid;
+  place-items: center;
+  color: var(--navy);
+  font-size: 2rem;
+  opacity: 0.95;
+  cursor: pointer;
+  transition: all .3s;
+}
+.gallery-item:hover {
+  transform: scale(1.02);
+  opacity: 1;
+  box-shadow: var(--shadow-md);
+}
+.gallery-item:nth-child(1) { grid-column: span 2; grid-row: span 2; font-size: 3rem; }
+
+.gallery-video { padding: 0; background: var(--navy); }
+.gallery-video video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  border-radius: var(--radius);
+}
+
+.gallery-item .ph-tag {
+  position: absolute;
+  bottom: 12px; left: 12px;
+  background: rgba(255,255,255,0.92);
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-family: monospace;
+  font-size: 0.72rem;
+  color: var(--navy);
+}
+
+@media (max-width: 720px) {
+  .gallery-grid {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(3, 160px);
+  }
+  .gallery-item:nth-child(1) { grid-column: span 2; grid-row: span 1; }
+}
+
+/* ============================================
+   Avis / Testimonials
+   ============================================ */
+.reviews {
+  background: var(--cream);
+}
+.reviews-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+}
+.review-card {
+  background: var(--white);
+  border-radius: var(--radius-lg);
+  padding: 32px;
+  border: 1px solid var(--border);
+  position: relative;
+}
+.review-card::before {
+  content: "\201C";
+  position: absolute;
+  top: 6px; left: 22px;
+  font-family: var(--font-display);
+  font-size: 5rem;
+  color: var(--orange);
+  opacity: 0.25;
+  line-height: 1;
+}
+.review-stars {
+  color: var(--orange);
+  margin-bottom: 16px;
+  font-size: 1.1rem;
+  letter-spacing: 2px;
+  position: relative;
+  z-index: 2;
+}
+.review-text {
+  font-style: italic;
+  color: var(--ink);
+  margin-bottom: 24px;
+  position: relative;
+  z-index: 2;
+}
+.review-author {
+  font-weight: 700;
+  color: var(--navy);
+}
+.review-author small { display: block; color: var(--muted); font-weight: 400; font-size: 0.85rem; margin-top: 2px; }
+.review-date {
+  display: block;
+  font-size: 0.78rem;
+  color: var(--muted);
+  margin-top: 4px;
+  font-weight: 400;
+  letter-spacing: 0;
+}
+
+.reviews-summary {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 10px 22px;
+  margin-top: 18px;
+  box-shadow: var(--shadow-sm);
+}
+.reviews-summary .rating {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  color: var(--navy);
+  letter-spacing: -0.02em;
+}
+.reviews-summary .stars { color: var(--orange); font-size: 1.05rem; letter-spacing: 2px; }
+.reviews-summary .count { font-size: 0.9rem; color: var(--muted); }
+.reviews-summary .google-mark {
+  font-size: 0.78rem;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 700;
+  border-left: 1px solid var(--border);
+  padding-left: 14px;
+}
+.reviews-cta { text-align: center; margin-top: 36px; }
+.reviews-cta .btn { background: var(--white); color: var(--navy); border: 2px solid var(--border); }
+.reviews-cta .btn:hover { background: var(--navy); color: var(--white); border-color: var(--navy); }
+.reviews-fallback-note {
+  text-align: center;
+  margin-top: 24px;
+  color: var(--muted);
+  font-size: 0.9rem;
+  font-style: italic;
+}
+
+/* ============================================
+   Contact
+   ============================================ */
+.contact {
+  background: var(--white);
+}
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+}
+.contact-info h2 { margin-bottom: 12px; }
+.contact-info-centered { max-width: 720px; margin: 0 auto; text-align: center; }
+.contact-info-centered .contact-blocks-centered {
+  margin: 36px auto 0;
+  max-width: 460px;
+  text-align: left;
+}
+.contact-info .script {
+  display: block;
+  font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+  color: var(--orange);
+  margin-bottom: 24px;
+  line-height: 1;
+}
+.contact-blocks {
+  display: grid;
+  gap: 18px;
+  margin-top: 36px;
+}
+.contact-block {
+  display: flex;
+  gap: 18px;
+  align-items: flex-start;
+  padding: 20px;
+  background: var(--cream);
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  transition: all .25s;
+  text-decoration: none;
+  color: var(--ink);
+}
+.contact-block:hover {
+  transform: translateY(-2px);
+  border-color: var(--orange);
+  box-shadow: var(--shadow-sm);
+}
+.contact-block .icon {
+  width: 48px; height: 48px;
+  background: var(--orange);
+  color: white;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  font-size: 1.3rem;
+  flex-shrink: 0;
+}
+.contact-block .icon-whatsapp {
+  background: #25D366;
+}
+.contact-block-whatsapp:hover { border-color: #25D366; }
+.contact-block .label {
+  font-size: 0.78rem;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+.contact-block .value {
+  font-weight: 700;
+  color: var(--navy);
+  font-size: 1.05rem;
+}
+
+.map-wrap {
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  height: 100%;
+  min-height: 460px;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+}
+.map-wrap iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: block;
+}
+.map-consent {
+  width: 100%;
+  height: 100%;
+  min-height: 460px;
+  background: linear-gradient(135deg, var(--cream-warm), var(--cream));
+  display: grid;
+  place-items: center;
+  padding: 30px;
+  text-align: center;
+}
+.map-consent-inner { max-width: 360px; }
+.map-consent-icon { font-size: 3rem; margin-bottom: 16px; }
+.map-consent p { color: var(--ink); margin-bottom: 14px; font-size: 0.95rem; }
+.map-consent p strong { color: var(--navy); }
+.map-consent .btn { margin: 8px 0 18px; }
+.map-consent-alt { font-size: 0.88rem; }
+.map-consent-alt a { color: var(--navy); font-weight: 600; }
+@media (max-width: 880px) {
+  .map-consent { min-height: 320px; }
+}
+
+@media (max-width: 880px) {
+  .contact-grid { grid-template-columns: 1fr; gap: 32px; }
+  .map-wrap { min-height: 340px; }
+}
+
+/* ============================================
+   Footer
+   ============================================ */
+.footer {
+  background: var(--navy-dark);
+  color: var(--cream);
+  padding: 60px 0 30px;
+}
+.footer-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 40px;
+  margin-bottom: 40px;
+}
+.footer-logo {
+  width: 100%;
+  max-width: 280px;
+  height: auto;
+  display: block;
+  margin-bottom: 20px;
+}
+.footer-tag { color: rgba(250, 246, 240, 0.6); max-width: 340px; font-size: 0.95rem; }
+.footer-col h4 {
+  color: var(--orange-light);
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  margin-bottom: 16px;
+  font-family: var(--font-body);
+  font-weight: 700;
+}
+.footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+.footer-col a {
+  color: rgba(250, 246, 240, 0.7);
+  font-size: 0.95rem;
+}
+.footer-col a:hover { color: var(--orange-light); }
+.footer-bottom {
+  border-top: 1px solid rgba(250, 246, 240, 0.1);
+  padding-top: 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 14px;
+  color: rgba(250, 246, 240, 0.5);
+  font-size: 0.85rem;
+}
+.footer-socials { display: flex; gap: 12px; }
+.footer-socials a {
+  width: 38px; height: 38px;
+  background: rgba(255,255,255,0.08);
+  border-radius: 10px;
+  display: grid;
+  place-items: center;
+  color: var(--cream);
+  font-size: 1rem;
+  font-weight: 700;
+}
+.footer-socials a:hover { background: var(--orange); color: white; }
+
+@media (max-width: 720px) {
+  .footer-grid { grid-template-columns: 1fr; gap: 30px; }
+}
+
+
+/* ============================================
+   Polish mobile (iPhone Safari et autres)
+   ============================================ */
+@media (max-width: 600px) {
+  .container { padding: 0 18px; }
+
+  /* Tap targets confortables — Apple HIG recommande 44pt minimum */
+  .btn {
+    padding: 16px 24px;
+    font-size: 0.95rem;
+    min-height: 48px;
+  }
+  .nav .btn { padding: 12px 22px; font-size: 0.85rem; }
+
+  /* Sections plus compactes en hauteur */
+  section { padding: clamp(48px, 12vw, 80px) 0; }
+  .hero { padding-top: 110px; padding-bottom: 60px; }
+
+  /* Hero */
+  .hero-tagline { font-size: 0.8rem; padding: 7px 14px; }
+  .hero h1 { margin-bottom: 10px; }
+  .hero-sub { font-size: 1.02rem; margin-bottom: 28px; }
+  .hero-cta { gap: 10px; margin-bottom: 32px; }
+  .hero-cta .btn { flex: 1 1 auto; justify-content: center; }
+  .hero-stats { gap: 18px; }
+  .hero-stat { flex: 1 1 30%; min-width: 90px; }
+  .hero-stat .num { font-size: 1.6rem; }
+  .hero-stat .label { font-size: 0.74rem; line-height: 1.3; }
+
+  /* Hero logo visual : moins de padding pour que le logo respire */
+  .hero-visual { padding: 24px; aspect-ratio: 16/10; }
+  .hero-logo-svg { max-width: 320px; width: 100%; }
+  .hero-badge {
+    top: 12px; right: 12px;
+    padding: 8px 12px;
+  }
+  .hero-badge .label { font-size: 0.62rem; }
+  .hero-badge .price { font-size: 1.3rem; }
+
+  /* Section intro */
+  .section-intro { margin-bottom: 36px; }
+  .section-intro .script { font-size: clamp(1.4rem, 5.5vw, 2rem); margin-bottom: 10px; }
+  .section-intro p { font-size: 0.98rem; }
+  .eyebrow { font-size: 0.78rem; margin-bottom: 14px; }
+
+  /* À propos */
+  .about-content p { font-size: 1rem; }
+  .about-content .signature { font-size: 2.2rem; margin-top: 24px; }
+
+  /* Menu */
+  .menu-grid { grid-template-columns: 1fr; gap: 18px; margin-bottom: 40px; }
+  .menu-card { max-width: 100%; }
+  .menu-card-body { padding: 20px; }
+  .menu-card h3 { font-size: 1.35rem; }
+  .menu-card-desc { font-size: 0.95rem; margin-bottom: 16px; }
+  .menu-card-img { font-size: 3rem; }
+  .menu-card-price { font-size: 1.5rem; }
+
+  .extras-card { padding: 26px 22px; }
+  .extras-list li { padding: 12px 14px; }
+  .formule { padding: 16px; }
+  .formule .price { font-size: 1.3rem; }
+
+  /* Planning */
+  .planning-block .script { font-size: 1.5rem; margin-bottom: 24px; }
+  .planning-address {
+    display: flex;
+    flex-direction: row;
+    text-align: left;
+    padding: 16px 20px;
+    gap: 14px;
+    width: 100%;
+    max-width: 100%;
+  }
+  .planning-pin { font-size: 1.7rem; }
+  .planning-pin-label { font-size: 0.72rem; }
+  .planning-pin-value { font-size: 0.98rem; }
+  .planning-msg { font-size: 1rem; margin-bottom: 22px; }
+  .btn-instagram { padding: 16px 24px; font-size: 0.95rem; width: 100%; justify-content: center; }
+
+  /* Privatisation */
+  .private-features li { font-size: 0.95rem; }
+  .private-features .check { width: 22px; height: 22px; font-size: 0.7rem; }
+  .private-cta { flex-direction: column; gap: 10px; }
+  .private-cta .btn { width: 100%; justify-content: center; }
+
+  /* Galerie */
+  .gallery-grid { gap: 10px; grid-template-rows: repeat(3, 140px); }
+
+  /* Avis Google */
+  .reviews-summary {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    padding: 12px 18px;
+  }
+  .reviews-summary .google-mark {
+    border-left: none;
+    padding-left: 0;
+    flex-basis: 100%;
+    text-align: center;
+  }
+  .reviews-grid { grid-template-columns: 1fr; gap: 16px; }
+  .review-card { padding: 26px 22px; }
+  .review-text { font-size: 0.95rem; margin-bottom: 18px; }
+
+  /* Contact */
+  .contact-block { padding: 16px; gap: 14px; }
+  .contact-block .icon { width: 44px; height: 44px; font-size: 1.15rem; }
+  .contact-block .value { font-size: 1rem; }
+
+  /* Footer */
+  .footer { padding: 48px 0 24px; }
+  .footer-logo { max-width: 240px; }
+  .footer-bottom { flex-direction: column-reverse; text-align: center; gap: 16px; }
+}
+
+/* iPhone très étroit (SE) */
+@media (max-width: 380px) {
+  .container { padding: 0 14px; }
+  .hero-stats { gap: 12px; }
+  .hero-stat .num { font-size: 1.4rem; }
+  .hero-cta { flex-direction: column; }
+  .hero-cta .btn { width: 100%; }
+  .menu-card h3 { font-size: 1.25rem; }
+}
+
+/* Safe area iPhone à encoche */
+@supports (padding: max(0px)) {
+  .header .container {
+    padding-left: max(18px, env(safe-area-inset-left));
+    padding-right: max(18px, env(safe-area-inset-right));
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- ============================================
+     HEADER
+     ============================================ -->
+<header class="header" id="header">
+  <div class="container">
+    <a href="#top" class="brand" aria-label="FRENCHEESE — Accueil">
+      <img src="images/logo-frencheese.svg" alt="FRENCHEESE" />
+    </a>
+    <nav class="nav" id="nav">
+      <a href="#histoire">Notre histoire</a>
+      <a href="#menu">Menu</a>
+      <a href="#planning">Où nous trouver</a>
+      <a href="#privatisation">Privatisation</a>
+      <a href="#contact" class="btn btn-primary">Contact</a>
+    </nav>
+    <button class="menu-toggle" id="menuToggle" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<!-- ============================================
+     HERO
+     ============================================ -->
+<section class="hero" id="top">
+  <div class="container">
+    <div class="hero-grid">
+      <div class="hero-text">
+        <span class="hero-tagline"><span class="pulse"></span> Saint-Jean-de-Monts · Côte vendéenne</span>
+        <h1>Le grilled cheese</h1>
+        <span class="script-accent">à la française.</span>
+        <p class="hero-sub">Pain artisanal, fromages français, recettes signature. Simplement fondant — par Clémence, depuis 2026.</p>
+        <div class="hero-cta">
+          <a href="#menu" class="btn btn-primary">Voir le menu ›</a>
+          <a href="#planning" class="btn btn-secondary">Nous trouver</a>
+        </div>
+        <div class="hero-stats">
+          <div class="hero-stat">
+            <div class="num">5</div>
+            <div class="label">Grilled cheese signature</div>
+          </div>
+          <div class="hero-stat">
+            <div class="num">100%</div>
+            <div class="label">Fromages français</div>
+          </div>
+          <div class="hero-stat">
+            <div class="num">85</div>
+            <div class="label">Vendée, côte atlantique</div>
+          </div>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="hero-badge">
+          <div class="label">À partir de</div>
+          <span class="price">9,90€</span>
+        </div>
+        <img src="images/logo-frencheese.svg" alt="FRENCHEESE — Le grilled cheese à la française" class="hero-logo-svg">
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================
+     À PROPOS
+     ============================================ -->
+<section class="about" id="histoire">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-image" id="aboutImage">
+        <div class="about-image-frame"></div>
+        <div class="ph">
+          Photo de Clémence
+          <span class="file">images/clemence.jpg</span>
+        </div>
+      </div>
+      <div class="about-content">
+        <span class="eyebrow">Notre histoire</span>
+        <h2>Une fondue de fromage devenue food truck.</h2>
+        <p>Moi c'est Clémence, j'ai 25 ans, et je suis un peu (trop) gourmande — et surtout complètement fan de fromage. FRENCHEESE, c'est mon aventure : revisiter le grilled cheese américain avec l'âme du fromage français.</p>
+        <p>Du comté affiné au chèvre fermier, du saumon fumé aux légumes rôtis, chaque recette est pensée pour vous faire vivre ce moment universel : la première bouchée, quand le fromage file. Le pain est artisanal, les ingrédients choisis, et le sourire offert.</p>
+        <p>Le truck sillonne la côte vendéenne, et j'ai hâte de vous y retrouver.</p>
+        <div class="signature">
+          Clémence
+          <small>Fondatrice de FRENCHEESE</small>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================
+     MENU
+     ============================================ -->
+<section class="menu" id="menu">
+  <div class="container">
+    <div class="section-intro">
+      <span class="eyebrow">Le menu</span>
+      <h2>Choisis ton grilled cheese</h2>
+      <span class="script">Simplement fondant</span>
+      <p>Tous nos grilled cheese sont préparés à la commande sur pain d'épeautre, à 9,90€ pièce.</p>
+    </div>
+
+    <div class="menu-grid" id="menuGrid">
+      <!-- Cards injected by JS -->
+    </div>
+
+    <div class="extras-grid">
+      <div class="extras-card">
+        <h3><span class="icon">🍟</span> Accompagnements</h3>
+        <ul class="extras-list" id="sidesList">
+          <!-- Sides injected by JS -->
+        </ul>
+      </div>
+      <div class="extras-card">
+        <h3><span class="icon">✨</span> Formules</h3>
+        <div class="formule">
+          <div class="name">Formule CLASSIQUE <small>Grilled cheese + frites</small></div>
+          <div class="price">12,50€</div>
+        </div>
+        <div class="formule">
+          <div class="name">Formule COMPLÈTE <small>Grilled cheese + frites + boisson</small></div>
+          <div class="price">14,50€</div>
+        </div>
+        <p style="margin-top: 20px; color: var(--muted); font-size: 0.9rem; line-height: 1.5;">Les formules sont à demander directement au comptoir ou par téléphone — elles sont uniquement disponibles sur place.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================
+     PLANNING
+     ============================================ -->
+<section class="planning" id="planning">
+  <div class="container">
+    <div class="planning-block">
+      <span class="eyebrow">Où nous trouver</span>
+      <h2>Suivez le truck.</h2>
+      <span class="script">en direct sur Instagram</span>
+
+      <p class="planning-msg">
+        Notre planning évolue chaque semaine selon les événements et la météo.<br>
+        Pour savoir <strong>où nous sommes aujourd'hui</strong>, retrouvez-nous sur Instagram — c'est là qu'on partage tout en temps réel.
+      </p>
+
+      <a href="https://www.instagram.com/frencheese_foodtruck/" target="_blank" rel="noopener" class="btn btn-primary btn-instagram">
+        Voir le planning sur Instagram ›
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================
+     PRIVATISATION
+     ============================================ -->
+<section class="private" id="privatisation">
+  <div class="container">
+    <div class="private-grid">
+      <div class="private-visual">
+        <div class="private-visual-text">
+          <div class="script">Vos événements,</div>
+          <div class="big">on s'en charge.</div>
+        </div>
+      </div>
+      <div class="private-content">
+        <span class="eyebrow">Privatisation</span>
+        <h2>Mariages, anniversaires, soirées d'entreprise.</h2>
+        <p>Vous voulez du grilled cheese fondant pour 30, 80 ou 200 personnes ? Le truck FRENCHEESE se déplace dans toute la Vendée et au-delà pour transformer votre événement en moment gourmand inoubliable.</p>
+        <ul class="private-features">
+          <li><span class="check">✓</span> Menu personnalisé selon votre événement</li>
+          <li><span class="check">✓</span> Service convivial, équipe souriante</li>
+          <li><span class="check">✓</span> Option végétarienne disponible</li>
+        </ul>
+        <div class="private-cta">
+          <a href="tel:+33789575405" class="btn btn-primary">📞 Demander un devis</a>
+          <a href="mailto:clemence.ratier@gmail.com?subject=Demande%20de%20devis%20-%20Privatisation" class="btn btn-secondary">Par email</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================
+     GALERIE
+     ============================================ -->
+<section class="gallery">
+  <div class="container">
+    <div class="section-intro">
+      <span class="eyebrow">Galerie</span>
+      <h2>Le truck en images</h2>
+      <span class="script">notre univers</span>
+    </div>
+    <div class="gallery-grid">
+      <div class="gallery-item gallery-video">
+        <video autoplay muted loop playsinline preload="metadata" poster="images/truck-1.jpg">
+          <source src="images/ambiance.mov" type="video/quicktime">
+          <source src="images/ambiance.mov" type="video/mp4">
+        </video>
+      </div>
+      <div class="gallery-item" data-img="images/truck-1.jpg">🚐<span class="ph-tag">truck-1.jpg</span></div>
+      <div class="gallery-item" data-img="images/burger.jpg">🧀<span class="ph-tag">burger.jpg</span></div>
+      <div class="gallery-item" data-img="images/frites.jpg">🍟<span class="ph-tag">frites.jpg</span></div>
+      <div class="gallery-item" data-img="images/menu-nordique.jpg">🥪<span class="ph-tag">nordique.jpg</span></div>
+    </div>
+    <p style="text-align: center; margin-top: 32px; color: var(--muted);">
+      Plus de photos sur <a href="https://www.instagram.com/frencheese_foodtruck/" target="_blank" rel="noopener"><strong>@frencheese_foodtruck</strong></a>
+    </p>
+  </div>
+</section>
+
+<!-- ============================================
+     AVIS
+     ============================================ -->
+<section class="reviews" id="reviewsSection" hidden>
+  <div class="container">
+    <div class="section-intro">
+      <span class="eyebrow">On en parle</span>
+      <h2>Ils ont goûté</h2>
+      <div id="reviewsSummary" class="reviews-summary" hidden></div>
+    </div>
+    <div class="reviews-grid" id="reviewsGrid">
+      <!-- Avis chargés dynamiquement depuis Google Places, fallback sur les exemples -->
+    </div>
+    <div class="reviews-cta" id="reviewsCta"></div>
+  </div>
+</section>
+
+<!-- ============================================
+     CONTACT
+     ============================================ -->
+<section class="contact" id="contact">
+  <div class="container">
+    <div class="contact-info contact-info-centered">
+      <span class="eyebrow">Contact</span>
+      <h2>Une envie de fromage</h2>
+      <span class="script">qui file ?</span>
+      <p style="color: var(--muted); font-size: 1.05rem;">Appelez-nous pour passer commande, réserver, ou organiser votre événement. On répond aussi sur Instagram !</p>
+
+      <div class="contact-blocks contact-blocks-centered">
+        <a href="tel:+33789575405" class="contact-block">
+          <div class="icon">📞</div>
+          <div>
+            <div class="label">Téléphone</div>
+            <div class="value">07 89 57 54 05</div>
+          </div>
+        </a>
+        <a href="https://wa.me/33789575405" target="_blank" rel="noopener" class="contact-block contact-block-whatsapp">
+          <div class="icon icon-whatsapp">
+            <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+              <path fill="currentColor" d="M17.5 14.4c-.3-.2-1.7-.8-2-.9-.3-.1-.5-.2-.7.2-.2.3-.8.9-.9 1.1-.2.2-.3.2-.6.1-.3-.2-1.2-.5-2.3-1.4-.9-.8-1.4-1.7-1.6-2-.2-.3 0-.5.1-.6.1-.1.3-.4.4-.5.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5-.1-.2-.7-1.6-.9-2.2-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.4 0 1.4 1 2.8 1.2 3 .2.2 2 3 4.8 4.2.7.3 1.2.5 1.6.6.7.2 1.3.2 1.8.1.5-.1 1.7-.7 2-1.4.2-.7.2-1.2.2-1.4-.1-.2-.3-.2-.6-.3z"/>
+              <path fill="currentColor" d="M20.5 3.5C18.3 1.3 15.3 0 12 0 5.4 0 0 5.4 0 12c0 2.1.6 4.2 1.6 6L0 24l6.1-1.6c1.8 1 3.8 1.5 5.9 1.5 6.6 0 12-5.4 12-12 0-3.3-1.3-6.3-3.5-8.4zM12 21.8c-1.8 0-3.6-.5-5.2-1.4l-.4-.2-3.6 1 1-3.5-.2-.4c-1-1.6-1.5-3.5-1.5-5.4 0-5.5 4.5-10 10-10s10 4.5 10 10-4.5 10-10 10z"/>
+            </svg>
+          </div>
+          <div>
+            <div class="label">WhatsApp</div>
+            <div class="value">Discutons en direct</div>
+          </div>
+        </a>
+        <a href="https://www.instagram.com/frencheese_foodtruck/" target="_blank" rel="noopener" class="contact-block">
+          <div class="icon">📷</div>
+          <div>
+            <div class="label">Instagram</div>
+            <div class="value">@frencheese_foodtruck</div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================
+     FOOTER
+     ============================================ -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <img src="images/logo-frencheese.svg" alt="FRENCHEESE — Le grilled cheese à la française" class="footer-logo" />
+        <p class="footer-tag">Pain artisanal, fromages français, recettes signature. Sur la côte vendéenne depuis 2026.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Navigation</h4>
+        <ul>
+          <li><a href="#histoire">Notre histoire</a></li>
+          <li><a href="#menu">Menu</a></li>
+          <li><a href="#planning">Où nous trouver</a></li>
+          <li><a href="#privatisation">Privatisation</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="tel:+33789575405">07 89 57 54 05</a></li>
+          <li><a href="https://www.instagram.com/frencheese_foodtruck/" target="_blank" rel="noopener">Instagram</a></li>
+          <li>11 Av. de la Forêt, Saint-Jean-de-Monts</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div>
+        © 2026 FRENCHEESE — Tous droits réservés ·
+        <a href="mentions-legales.html">Mentions légales</a>
+      </div>
+      <div class="footer-socials">
+        <a href="https://www.instagram.com/frencheese_foodtruck/" target="_blank" rel="noopener" aria-label="Instagram">IG</a>
+        <a href="tel:+33789575405" aria-label="Téléphone">☎</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+<!-- ============================================
+     JAVASCRIPT
+     ============================================ -->
+<script>
+// =====================================
+// CONFIG — à éditer par Clémence
+// =====================================
+const CONFIG = {
+  // Google Places API — Frencheese Food Truck (Saint-Jean-de-Monts)
+  // Clé restreinte par référent HTTP côté Google Cloud Console (voir avis-google.md)
+  googleApiKey: 'AIzaSyD0-SW8EOcmUtUb_c8GBu3r4nXbovke-sI',
+  googlePlaceId: 'ChIJ-eoAdWXflvcRu8a1SE__BEg',
+};
+
+// =====================================
+// Menu data (official menu from FRENCHEESE)
+// =====================================
+const MENU_ITEMS = [
+  {
+    id: 'burger',
+    name: 'Le Burger',
+    desc: "Pain d'épeautre, cheddar, steak haché, cornichons, tomates, oignons rouges, sauce giraumon.",
+    price: 9.90,
+    img: 'images/menu-burger.jpg',
+    initial: 'B',
+    veg: false
+  },
+  {
+    id: '1910',
+    name: 'Le 1910',
+    desc: "Pain d'épeautre, comté râpé, jambon blanc, crème, paprika fumé et piment d'Espelette.",
+    price: 9.90,
+    img: 'images/menu-1910.jpg',
+    initial: '1910',
+    veg: false
+  },
+  {
+    id: 'nordique',
+    name: 'Le Nordique',
+    desc: "Pain d'épeautre, fromage frais, saumon fumé, avocat.",
+    price: 9.90,
+    img: 'images/menu-nordique.jpg',
+    initial: 'N',
+    veg: false
+  },
+  {
+    id: 'sud',
+    name: 'On Dirait Le Sud',
+    desc: "Pain d'épeautre, chèvre, caviar de tomates, oignons caramélisés, courgettes rôties.",
+    price: 9.90,
+    img: 'images/menu-biquette.jpg',
+    initial: 'S',
+    veg: true
+  },
+  {
+    id: 'atypique',
+    name: "L'Atypique",
+    desc: "Pain d'épeautre, chèvre, sauce moutarde miel, poulet mariné, chou rouge.",
+    price: 9.90,
+    img: 'images/menu-atypique.jpg',
+    initial: 'A',
+    veg: false
+  }
+];
+
+const SIDES = [
+  { id: 'frites', name: 'Frites maison', price: 3.50 },
+  { id: 'eau', name: 'Eau', price: 2.00 },
+  { id: 'boisson', name: 'Boissons', price: 3.00 },
+  { id: 'dessert', name: 'Dessert du jour', price: 3.50 }
+];
+
+// =====================================
+// Helper: check if image exists, fallback gracefully
+// =====================================
+function imageLoadable(url) {
+  return new Promise(resolve => {
+    const img = new Image();
+    img.onload = () => resolve(true);
+    img.onerror = () => resolve(false);
+    img.src = url;
+  });
+}
+
+// =====================================
+// Render menu
+// =====================================
+const menuGrid = document.getElementById('menuGrid');
+MENU_ITEMS.forEach(item => {
+  const card = document.createElement('div');
+  card.className = 'menu-card';
+  card.innerHTML = `
+    <div class="menu-card-img" data-img="${item.img}">
+      ${item.veg ? '<span class="menu-card-tag veg">Végétarien</span>' : '<span class="menu-card-tag">Signature</span>'}
+      <span class="menu-card-initial">${item.initial}</span>
+    </div>
+    <div class="menu-card-body">
+      <h3>${item.name}</h3>
+      <p class="menu-card-desc">${item.desc}</p>
+      <div class="menu-card-footer">
+        <div class="menu-card-price">${item.price.toFixed(2).replace('.', ',')}€</div>
+      </div>
+    </div>
+  `;
+  menuGrid.appendChild(card);
+
+  // Try loading the image
+  imageLoadable(item.img).then(ok => {
+    if (ok) {
+      const imgEl = card.querySelector('.menu-card-img');
+      imgEl.style.backgroundImage = `url('${item.img}')`;
+      imgEl.classList.add('has-img');
+    }
+  });
+});
+
+// Sides
+const sidesList = document.getElementById('sidesList');
+SIDES.forEach(side => {
+  const li = document.createElement('li');
+  li.innerHTML = `
+    <span class="name">${side.name}</span>
+    <span class="price">${side.price.toFixed(2).replace('.', ',')}€</span>
+  `;
+  sidesList.appendChild(li);
+});
+
+// =====================================
+// About image lazy load
+// =====================================
+imageLoadable('images/clemence.jpg').then(ok => {
+  if (ok) {
+    const about = document.getElementById('aboutImage');
+    about.style.backgroundImage = "url('images/clemence.jpg')";
+    about.style.backgroundSize = 'cover';
+    about.style.backgroundPosition = 'center';
+    about.querySelector('.ph').style.display = 'none';
+    about.querySelector('.about-image-frame').style.display = 'none';
+  }
+});
+
+// Gallery images lazy load
+document.querySelectorAll('.gallery-item').forEach(el => {
+  const src = el.dataset.img;
+  if (!src) return;
+  imageLoadable(src).then(ok => {
+    if (ok) {
+      el.style.backgroundImage = `url('${src}')`;
+      el.style.color = 'transparent';
+      el.querySelector('.ph-tag').style.display = 'none';
+    }
+  });
+});
+
+// Header scroll effect
+const header = document.getElementById('header');
+window.addEventListener('scroll', () => {
+  if (window.scrollY > 20) header.classList.add('scrolled');
+  else header.classList.remove('scrolled');
+}, { passive: true });
+
+// Mobile nav toggle
+const menuToggle = document.getElementById('menuToggle');
+const nav = document.getElementById('nav');
+menuToggle.addEventListener('click', () => {
+  nav.classList.toggle('open');
+});
+nav.querySelectorAll('a').forEach(a => {
+  a.addEventListener('click', () => nav.classList.remove('open'));
+});
+
+// =====================================
+// Avis Google Places — section masquée tant qu'on n'a pas de vrais avis Google
+// =====================================
+const reviewsSection = document.getElementById('reviewsSection');
+const reviewsGrid = document.getElementById('reviewsGrid');
+const reviewsSummary = document.getElementById('reviewsSummary');
+const reviewsCta = document.getElementById('reviewsCta');
+
+function starsString(n) {
+  const full = Math.round(n);
+  return '★'.repeat(full) + '☆'.repeat(5 - full);
+}
+
+function renderReviews(reviews, summary, googleUrl) {
+  // Si aucun vrai avis Google, on garde la section masquée
+  if (!reviews || !reviews.length) {
+    reviewsSection.hidden = true;
+    return;
+  }
+  reviewsSection.hidden = false;
+
+  // Résumé (note moyenne)
+  if (summary && summary.rating) {
+    reviewsSummary.hidden = false;
+    reviewsSummary.innerHTML = `
+      <span class="rating">${summary.rating.toFixed(1)}</span>
+      <span class="stars">${starsString(summary.rating)}</span>
+      <span class="count">${summary.count} avis</span>
+      <span class="google-mark">Google</span>
+    `;
+  } else {
+    reviewsSummary.hidden = true;
+  }
+
+  // Cards
+  reviewsGrid.innerHTML = '';
+  reviews.forEach(r => {
+    const card = document.createElement('div');
+    card.className = 'review-card';
+    card.innerHTML = `
+      <div class="review-stars">${starsString(r.rating || 5)}</div>
+      <p class="review-text">${(r.text || '').replace(/</g,'&lt;')}</p>
+      <div class="review-author">
+        ${(r.author || '').replace(/</g,'&lt;')}
+        ${r.date ? `<span class="review-date">${r.date}</span>` : ''}
+      </div>
+    `;
+    reviewsGrid.appendChild(card);
+  });
+
+  // CTA "voir sur Google"
+  if (googleUrl) {
+    reviewsCta.innerHTML = `<a href="${googleUrl}" target="_blank" rel="noopener" class="btn">Voir tous les avis sur Google ›</a>`;
+  } else {
+    reviewsCta.innerHTML = '';
+  }
+}
+
+async function loadGoogleReviews() {
+  if (!CONFIG.googleApiKey || !CONFIG.googlePlaceId) return;
+
+  try {
+    const url = `https://places.googleapis.com/v1/places/${encodeURIComponent(CONFIG.googlePlaceId)}` +
+                `?fields=displayName,rating,userRatingCount,reviews,googleMapsUri` +
+                `&languageCode=fr&key=${encodeURIComponent(CONFIG.googleApiKey)}`;
+    // Force l'envoi de l'origine au domaine Google (référent obligatoire pour la clé restreinte)
+    const resp = await fetch(url, { referrerPolicy: 'origin', mode: 'cors' });
+    if (!resp.ok) throw new Error('HTTP ' + resp.status);
+    const data = await resp.json();
+
+    const reviews = (data.reviews || []).slice(0, 6).map(r => ({
+      rating: r.rating,
+      text: r.text?.text || r.originalText?.text || '',
+      author: r.authorAttribution?.displayName || 'Client Google',
+      date: r.relativePublishTimeDescription || ''
+    })).filter(r => r.text);
+
+    if (reviews.length) {
+      const summary = {
+        rating: data.rating || 0,
+        count: data.userRatingCount || reviews.length
+      };
+      renderReviews(reviews, summary, data.googleMapsUri || null);
+    }
+  } catch (err) {
+    console.warn('Avis Google indisponibles :', err);
+  }
+}
+
+loadGoogleReviews();
+
+
+</script>
+
+</body>
+</html>
