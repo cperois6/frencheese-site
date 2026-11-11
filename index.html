@@ -897,6 +897,11 @@ const CONFIG = {
   // Si le Sheet ne répond pas, le site affiche le contenu par défaut ci-dessous.
   sheetPubId: '2PACX-1vSCjj3v5kvZn9oaPuxY1k_BktCcPHfrJMtYgmov4_G1i0pfgPXzI2qUbuLf8vzlLcTyT5pMO0e_Y62c',
   sheetTabs: { carte: 1, dates: 2, privatisation: 3 }, // numéros (gid) des onglets
+
+  // Envoi des demandes de devis par e-mail à Clémence (FormSubmit, gratuit, sans compte).
+  // La 1re demande déclenche un e-mail « Activate Form » à cette adresse : il suffit de cliquer une fois.
+  // Les demandes restent aussi enregistrées dans Netlify (Forms > devis).
+  devisEmail: 'clemence.ratier@gmail.com',
 };
 
 // =====================================
@@ -1374,7 +1379,7 @@ async function loadSheet() {
 loadSheet();
 
 // =====================================
-// Formulaire de devis (Netlify Forms)
+// Formulaire de devis : enregistré dans Netlify Forms ET envoyé par e-mail à Clémence
 // =====================================
 const devisForm = document.getElementById('devisForm');
 if (devisForm) {
@@ -1384,28 +1389,68 @@ if (devisForm) {
   const now = new Date();
   dateInput.min = new Date(now.getTime() - now.getTimezoneOffset() * 60000).toISOString().slice(0, 10);
 
+  const frDate = v => { const m = String(v || '').match(/^(\d{4})-(\d{2})-(\d{2})$/); return m ? `${m[3]}/${m[2]}/${m[1]}` : v; };
+
+  // 1) Enregistrement dans Netlify Forms (tableau de bord + export CSV)
+  async function sendToNetlify(data) {
+    const resp = await fetch('/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams(data).toString(),
+    });
+    if (!resp.ok) throw new Error('Netlify HTTP ' + resp.status);
+  }
+
+  // 2) E-mail direct à Clémence via FormSubmit
+  async function sendByEmail(data) {
+    if (!CONFIG.devisEmail) return;
+    const get = k => (data.get(k) || '').toString().trim();
+    const payload = {
+      _subject: `Nouvelle demande de devis : ${get('nom')}${get('evenement') ? ' — ' + get('evenement') : ''}`,
+      _template: 'table',
+      _captcha: 'false',
+      'Nom': get('nom'),
+      'Téléphone': get('telephone'),
+      'E-mail': get('email') || '—',
+      "Type d'événement": get('evenement'),
+      "Date de l'événement": frDate(get('date')) || '—',
+      'Lieu': get('lieu') || '—',
+      'Nombre de personnes': get('personnes') || '—',
+      'Message': get('message') || '—',
+    };
+    if (get('email')) payload._replyto = get('email');
+    const resp = await fetch(`https://formsubmit.co/ajax/${CONFIG.devisEmail}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify(payload),
+    });
+    if (!resp.ok) throw new Error('FormSubmit HTTP ' + resp.status);
+    const json = await resp.json().catch(() => ({}));
+    // Avant l'activation, FormSubmit répond « needs Activation » : la demande est gardée et livrée après activation.
+    if (String(json.success) !== 'true') console.info('FormSubmit :', json.message || json);
+  }
+
   devisForm.addEventListener('submit', async (e) => {
     e.preventDefault();
     submitBtn.disabled = true;
     status.className = 'devis-status';
     status.textContent = 'Envoi en cours…';
-    try {
-      const resp = await fetch('/', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: new URLSearchParams(new FormData(devisForm)).toString(),
-      });
-      if (!resp.ok) throw new Error('HTTP ' + resp.status);
+    const data = new FormData(devisForm);
+    const isBot = (data.get('bot-field') || '') !== '';
+    const [netlify, email] = await Promise.allSettled([
+      sendToNetlify(data),
+      isBot ? Promise.resolve() : sendByEmail(data),
+    ]);
+    [netlify, email].filter(r => r.status === 'rejected').forEach(r => console.warn('Envoi du devis :', r.reason));
+    if (netlify.status === 'fulfilled' || email.status === 'fulfilled') {
       devisForm.reset();
       status.classList.add('ok');
       status.textContent = 'Merci ! Votre demande est bien partie, Clémence vous recontacte très vite.';
-    } catch (err) {
-      console.warn('Envoi du formulaire impossible :', err);
+    } else {
       status.classList.add('err');
       status.innerHTML = 'L’envoi n’a pas fonctionné. Appelez-nous au <a href="tel:+33789575405">07 89 57 54 05</a> ou écrivez-nous sur <a href="https://wa.me/33789575405" target="_blank" rel="noopener">WhatsApp</a>.';
-    } finally {
-      submitBtn.disabled = false;
     }
+    submitBtn.disabled = false;
   });
 }
 </script>
